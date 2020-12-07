@@ -4,26 +4,27 @@ from PIL import ImageDraw
 import os
 import random
 
+#获取当前路径
 StoreFolder = os.getcwd()
 
 def Rand_color():
     """随机一些好看的颜色
     """
-    N = 12
-    Color = [None]*N
-    Color[0] = (189, 167, 146)
-    Color[1] = (196, 86, 85)
-    Color[2] = (174, 94, 83)
-    Color[3] = (170, 177, 144)
-    Color[4] = (207, 133, 60)
-    Color[5] = (127, 156, 186)
-    Color[6] = (161, 175, 201)
-    Color[7] = (236, 247, 241)
-    Color[8] = (242, 249, 242)
-    Color[9] = (197, 215, 215)
-    Color[10] = (40, 44, 52)
-    Color[11] = (77, 114, 184)
-
+    Color = []
+    Color.append((189, 167, 146))
+    Color.append((196, 86, 85))
+    Color.append((174, 94, 83))
+    Color.append((170, 177, 144))
+    Color.append((207, 133, 60))
+    Color.append((127, 156, 186))
+    Color.append((161, 175, 201))
+    Color.append((236, 247, 241))
+    Color.append((242, 249, 242))
+    Color.append((197, 215, 215))
+    Color.append((40, 44, 52))
+    Color.append((77, 114, 184))
+    
+    N = len(Color)
     num = random.randint(0,N-1)
     return Color[num]
 
@@ -36,7 +37,7 @@ def Get_size():
     return size
 
 def Gen_wallpaper(size):
-    """
+    """制作壁纸
     """
     img = Image.new(size=size, mode='RGB', color='white')   # 设置图片大小和图片模式
     a = ImageDraw.ImageDraw(img)
@@ -56,13 +57,15 @@ def Gen_wallpaper(size):
     return imagePath
 
 def setWallpaperFromBMP(imagepath):
+    """设置为桌面背景
+    """
     k = win32api.RegOpenKeyEx(win32con.HKEY_CURRENT_USER,"Control Panel\\Desktop",0,win32con.KEY_SET_VALUE)
     win32api.RegSetValueEx(k, "WallpaperStyle", 0, win32con.REG_SZ, "2") #2拉伸适应桌面,0桌面居中
     win32api.RegSetValueEx(k, "TileWallpaper", 0, win32con.REG_SZ, "0")
     win32gui.SystemParametersInfo(win32con.SPI_SETDESKWALLPAPER,imagepath, 1+2)
     return None
     
-size = Get_size()
-imagePath = Gen_wallpaper(size)
-setWallpaperFromBMP(imagePath)
-
+if __name__ == "__main__":
+    size = Get_size()
+    imagePath = Gen_wallpaper(size)
+    setWallpaperFromBMP(imagePath)
