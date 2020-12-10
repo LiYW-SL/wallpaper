@@ -1,1 +1,1 @@
-python wallpaper.py
+python rect_wallpaper.py
