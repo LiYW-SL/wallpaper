@@ -1,1 +1,0 @@
-python rect_wallpaper.py
